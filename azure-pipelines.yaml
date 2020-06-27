@@ -46,7 +46,7 @@ stages:
     environment:
       name:  TEST
       resourceType: VirtualMachine
-      tags: test
+      tags: webtest
     strategy:
       runOnce:
         deploy:
