@@ -26,7 +26,8 @@ stages:
       artifact: drop-fakerestapi
     - task: Npm@1
       inputs:
-        command: 'install newman -g'
+        command: 'custom'
+        customCommand: 'npm install newman -g'
 - stage:
   jobs:
   - deployment: FakeRestAPI
