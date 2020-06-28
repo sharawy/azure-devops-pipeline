@@ -2,7 +2,7 @@ name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
-- stage: Build
+# - stage: Build
   jobs:
   - job: Build
     pool:
@@ -26,7 +26,7 @@ stages:
       artifact: drop-fakerestapi
 - stage:
   jobs:
-  - deployment: FakeRestAPI
+  # - deployment: FakeRestAPI
     pool:
       vmImage: 'Ubuntu-16.04'
     environment: 'TEST'
