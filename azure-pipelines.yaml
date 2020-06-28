@@ -79,6 +79,7 @@ stages:
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
+                sudo apt-get install chromium-chromedriver
                 echo "Starting selenium script run"
                 sudo python '$(Pipeline.Workspace)/drop/selenium/login.py)'
                 
