@@ -11,7 +11,7 @@ stages:
     # Needed for Terraform VM deployment
     - task: InstallSSHKey@0
       inputs:
-        knownHostsEntry: '52.249.181.57'
+        knownHostsEntry: '13.82.138.201'
         sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKsGKosPiMaX49FdzLc30W8Vyk1q2FpSd1YrWZmypqvgthX01e6MTGBZ2Ivcu16UP0rTmvuJCESXePa3JGxNXEZB25vOk4zLaHxQgGoqYqUHc3fWKZjmgngubZ2CwsJ/c0yUXzw+WpXsJubouDuGqeSugBS1b7XexyX1H9y6lrekmouMFPUsYvhUWRYpXP9BrAxpxTIksM/rDKX+RxCOijimz22sVgZO0bT4mChhk5xlD9wzdFxwnIP5TclfDMqXs39n091lPfPIp8Letj1Y+20dDH1NFvhculrYsgbl4XSoyIOfZ4aUguiw4MNnBfEKqN292EP5ZQNfm78uTqpHtT stcs@STCSs-MacBook-Pro.local'
         sshKeySecureFile: 'id_rsa'
     - task: ArchiveFiles@2
