@@ -24,6 +24,9 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
+    - task: Npm@1
+      inputs:
+        command: 'install newman -g'
 - stage:
   jobs:
   - deployment: FakeRestAPI
