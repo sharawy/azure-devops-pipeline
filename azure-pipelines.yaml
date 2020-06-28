@@ -24,9 +24,16 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
-    - bash: |
-            sudo npm install newman -g
-      
+    - script: sudo npm install newman -g
+      displayName: 'install newman'
+    - script: newman run StarterAPIs.json --reporters junit,cli --reporter-junit-export .
+      displayName: 'run postman collection'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/newman-*.xml'
+        failTaskOnFailedTests: true
+        testRunTitle: 'postman test suite'
 - stage:
   jobs:
   - deployment: FakeRestAPI
