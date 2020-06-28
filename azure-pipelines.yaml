@@ -24,10 +24,10 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
-    - task: Npm@1
-      inputs:
-        command: 'custom'
-        customCommand: 'install newman -g'
+  - job: Postman
+    steps:
+      - bash: |
+            sudo npm install newman -g
 - stage:
   jobs:
   - deployment: FakeRestAPI
