@@ -81,5 +81,5 @@ stages:
                 pip3 install selenium
                 sudo apt-get install chromium-chromedriver
                 echo "Starting selenium script run"
-                python3 '$(Pipeline.Workspace)/drop/selenium/login.py)'
+                python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
                 
