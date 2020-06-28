@@ -27,7 +27,7 @@ stages:
     - task: Npm@1
       inputs:
         command: 'custom'
-        customCommand: 'npm install newman -g'
+        customCommand: 'install newman -g'
 - stage:
   jobs:
   - deployment: FakeRestAPI
