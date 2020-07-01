@@ -58,17 +58,6 @@ stages:
               appName: 'sharawy-ud-proj-AppService'
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  - deployment: Run jmeter tests
-    pool:
-      vmImage: 'Ubuntu-16.04'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: BASH@3
-            displayName: 'install java'
-            
   - deployment: VMDeploy
     displayName: NAME
     environment:
