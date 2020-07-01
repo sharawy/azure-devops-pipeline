@@ -59,7 +59,7 @@ stages:
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   - deployment: VMDeploy
-    displayName: NAME
+    displayName: install test dependencies 
     environment:
       name:  TEST
       resourceType: VirtualMachine
@@ -80,6 +80,10 @@ stages:
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
                 sudo apt-get install chromium-chromedriver
-                echo "Starting selenium script run"
-                python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
-                
+        on:
+          failure:
+            steps:
+            - script: echo Failed to instal dependencies
+          success:
+            steps:
+            - script: python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
