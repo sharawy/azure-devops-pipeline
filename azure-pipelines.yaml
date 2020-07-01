@@ -41,15 +41,6 @@ stages:
         testResultsFiles: '**/newman-*.xml'
         failTaskOnFailedTests: true
         testRunTitle: 'postman test suite'
-    - task: ApacheJMeterLoadTest@1
-      inputs:
-        #connectedServiceName: # Optional
-        testDrop: 
-        loadTest: 'jmeter/jmeter.jmx' 
-        #agentCount: '1' # Options: 1, 2, 3, 4, 5
-        #runDuration: '60' # Options: 60, 120, 180, 240, 300
-        #geoLocation: 'Default' # Optional. Options: default, australia East, australia Southeast, brazil South, central India, central US, east Asia, east US 2, east US, japan East, japan West, north Central US, north Europe, south Central US, south India, southeast Asia, west Europe, west US
-        #machineType: '0' # Optional. Options: 0, 2
 - stage:
   jobs:
   - deployment: FakeRestAPI
@@ -67,6 +58,17 @@ stages:
               appName: 'sharawy-ud-proj-AppService'
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+  - deployment: Run jmeter tests
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    environment: 'TEST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: BASH@3
+            displayName: 'install java'
+            
   - deployment: VMDeploy
     displayName: NAME
     environment:
@@ -90,8 +92,8 @@ stages:
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
                 sudo apt-get install chromium-chromedriver
-                echo "Starting selenium script run"
-                python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
+                sudo apt-get install jmeter
+
           - task: Bash@3
             displayName: 'run selenium'
             inputs:
