@@ -69,6 +69,7 @@ stages:
         deploy:
           steps:
           - task: Bash@3
+            displayName: 'install test dependencies'
             inputs:
               targetType: 'inline'
               script: |
@@ -82,11 +83,11 @@ stages:
                 sudo apt-get install chromium-chromedriver
                 echo "Starting selenium script run"
                 python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
-        on:
-          failure:
-            steps:
-            - script: echo Restore from backup! This is on failure
-          success:
-            steps:
-            - script: echo Notify! This is on success
-              
+           - task: Bash@3
+            displayName: 'run selenium'
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                echo "Starting selenium script run"
+                python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
