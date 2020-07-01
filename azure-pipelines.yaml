@@ -81,7 +81,7 @@ stages:
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
                 sudo apt-get install chromium-chromedriver
-                sudo apt-get install jmeter
+                sudo apt-get --assume-yes install  jmeter
 
           - task: Bash@3
             displayName: 'run selenium'
