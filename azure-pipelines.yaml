@@ -91,3 +91,12 @@ stages:
                 #! /bin/bash
                 echo "Starting selenium script run"
                 python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
+          - task: Bash@3
+            displayName: 'run jmeter'
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                echo "Starting jmeter script run"
+                jmeter -n -f -t $(Pipeline.Workspace)/drop/jmeter/Starter.jmx -l $(Pipeline.Workspace)/drop/jmeter/Results.jtl -e -o $(Pipeline.Workspace)/drop/jmeter/htmlReports/
+
