@@ -59,7 +59,7 @@ stages:
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   - deployment: VMDeploy
-    displayName: NAME
+    displayName: Run test suites on vm
     environment:
       name:  TEST
       resourceType: VirtualMachine
@@ -83,7 +83,7 @@ stages:
                 sudo apt-get install chromium-chromedriver
                 DIR="$(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3"
                 if [ ! -d "$DIR" ]; then
-                # Take action if $DIR exists. #
+                # Take action if $DIR not exists. #
                 echo "Installing jmeter  in ${DIR}..."
                 cd $(Pipeline.Workspace)/drop/jmeter
                 wget  http://apache.volia.net//jmeter/binaries/apache-jmeter-5.3.tgz
