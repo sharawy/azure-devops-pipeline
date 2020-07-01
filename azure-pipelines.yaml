@@ -83,7 +83,7 @@ stages:
                 sudo apt-get install chromium-chromedriver
                 echo "Starting selenium script run"
                 python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
-           - task: Bash@3
+          - task: Bash@3
             displayName: 'run selenium'
             inputs:
               targetType: 'inline'
