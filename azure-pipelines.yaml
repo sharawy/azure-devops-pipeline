@@ -60,6 +60,7 @@ stages:
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   - deployment: VMDeploy
     displayName: Run test suites on vm
+    dependsOn: FakeRestAPI
     environment:
       name:  TEST
       resourceType: VirtualMachine
