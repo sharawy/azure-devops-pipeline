@@ -81,7 +81,13 @@ stages:
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
                 sudo apt-get install chromium-chromedriver
-                sudo apt-get --assume-yes install  jmeter
+                DIR="$(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3"
+                if [ -d "$DIR" ]; then
+                # Take action if $DIR exists. #
+                echo "Installing jmeter  in ${DIR}..."
+                wget -P $(Pipeline.Workspace)/drop/jmeter/ http://apache.volia.net//jmeter/binaries/apache-jmeter-5.3.tgz
+                tar -xf apache-jmeter-5.3.tgz 
+                fi
 
           - task: Bash@3
             displayName: 'run selenium'
@@ -98,5 +104,5 @@ stages:
               script: |
                 #! /bin/bash
                 echo "Starting jmeter script run"
-                jmeter -n -t $(Pipeline.Workspace)/drop/jmeter/Starter.jmx -l $(Pipeline.Workspace)/drop/jmeter/Results.jtl -e -o $(Pipeline.Workspace)/drop/jmeter/htmlReports/
+                $(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3/bin/jmeter -n -f -t $(Pipeline.Workspace)/drop/jmeter/Starter.jmx -l $(Pipeline.Workspace)/drop/jmeter/Results.jtl -e -o $(Pipeline.Workspace)/drop/jmeter/htmlReports/
 
