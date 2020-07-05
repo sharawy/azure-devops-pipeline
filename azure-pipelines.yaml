@@ -11,6 +11,14 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'v0.11.11'
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          ls
+          pwd
     - task: TerraformCLI@0
       inputs:
         command: 'init'
