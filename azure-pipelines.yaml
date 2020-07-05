@@ -36,7 +36,8 @@ stages:
       inputs:
         script: |
           echo  $(id_rsa_file.secureFilePath)
-          ls $(id_rsa_file.secureFilePath)
+          ls $(id_rsa_file.secureFilePath)/id_rsa
+
           # echo "Run terraform plan"
           # terraform plan
         workingDirectory: 'terraform'
