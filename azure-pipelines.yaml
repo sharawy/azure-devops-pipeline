@@ -35,6 +35,7 @@ stages:
     - task: TerraformCLI@0
       inputs:
         command: 'plan'
+        workingDirectory: 'terraform'
         environmentServiceName: 'azure-devops'
     - task: CmdLine@2
       inputs:
