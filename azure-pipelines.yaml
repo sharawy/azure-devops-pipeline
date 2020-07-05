@@ -31,6 +31,7 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
+          ls /home/vsts/work/_temp/id_rsa
           echo "Run terraform plan"
           terraform plan
         workingDirectory: 'terraform'
