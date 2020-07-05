@@ -30,11 +30,13 @@ stages:
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'terraform.tfstate'
         backendAzureRmResourceGroupLocation: 'eastus'
-    - task: TerraformCLI@0
+    - task: CmdLine@2
       inputs:
-        command: 'plan'
-        workingDirectory: 'terrafrom'
-        environmentServiceName: 'azure-devops'
+        script: |
+          echo "Run terraform plan"
+          terraform plan
+        workingDirectory: 'terraform'
+        failOnStderr: true
 
 # - stage: Build
 #   jobs:
