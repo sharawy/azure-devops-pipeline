@@ -32,13 +32,18 @@ stages:
       name: id_rsa_file
       inputs:
         secureFile: 'id_rsa'
+    - task: TerraformCLI@0
+      inputs:
+        command: 'plan'
+        environmentServiceName: 'azure-devops'
+        secureVarsFile: 'id_rsa'
     - task: CmdLine@2
       inputs:
         script: |
           echo  $(id_rsa_file.secureFilePath)
           cat $(id_rsa_file.secureFilePath)/
           cat ~/.ssh/id_rsa.pub
-          
+
           # echo "Run terraform plan"
           # terraform plan
         workingDirectory: 'terraform'
