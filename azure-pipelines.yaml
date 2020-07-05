@@ -16,6 +16,7 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         backendType: 'azurerm'
+        ensureBackend: true
         backendServiceArm: 'azure-devops'
         backendAzureRmResourceGroupName: 'tstate-sharawy'
         backendAzureRmStorageAccountName: 'tstate27986'
