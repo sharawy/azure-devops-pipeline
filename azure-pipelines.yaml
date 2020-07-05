@@ -30,6 +30,11 @@ stages:
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'terraform.tfstate'
         backendAzureRmResourceGroupLocation: 'eastus'
+    - task: TerraformCLI@0
+      inputs:
+        command: 'plan'
+        workingDirectory: 'terrafrom'
+        environmentServiceName: 'azure-devops'
 
 # - stage: Build
 #   jobs:
