@@ -36,7 +36,7 @@ stages:
       inputs:
         script: |
           echo  $(id_rsa_file.secureFilePath)
-          # ls /home/vsts/work/_temp/
+          ls $(id_rsa_file.secureFilePath)
           # echo "Run terraform plan"
           # terraform plan
         workingDirectory: 'terraform'
