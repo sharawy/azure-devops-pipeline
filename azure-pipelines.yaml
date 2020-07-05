@@ -37,13 +37,11 @@ stages:
         targetType: 'inline'
         script: |
           cp $(public_key_file.secureFilePath) ~/.ssh
-          ls ~/.ssh
-          cat $(public_key_file.secureFilePath)
-    # - task: TerraformCLI@0
-    #   inputs:
-    #     command: 'plan'
-    #     workingDirectory: 'terraform'
-    #     environmentServiceName: 'azure-devops'
+    - task: TerraformCLI@0
+      inputs:
+        command: 'plan'
+        workingDirectory: 'terraform'
+        environmentServiceName: 'azure-devops'
 
 #     - task: ArchiveFiles@2
 #       displayName: 'Archive FakeRestAPI'
