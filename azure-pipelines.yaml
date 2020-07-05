@@ -37,7 +37,7 @@ stages:
           ls ~/.ssh/known_hosts
           # ls /home/vsts/work/_temp/
           # echo "Run terraform plan"
-          terraform plan
+          # terraform plan
         workingDirectory: 'terraform'
         failOnStderr: true
     # Needed for Terraform VM deployment
