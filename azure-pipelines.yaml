@@ -11,109 +11,115 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'v0.11.11'
-- stage: Build
-  jobs:
-  - job: Build
-    pool:
-      name: Hosted Ubuntu 1604
-    steps:
-    # Needed for Terraform VM deployment
-    - task: InstallSSHKey@0
+    - task: TerraformCLI@0
       inputs:
-        knownHostsEntry: '13.82.138.201'
-        sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKsGKosPiMaX49FdzLc30W8Vyk1q2FpSd1YrWZmypqvgthX01e6MTGBZ2Ivcu16UP0rTmvuJCESXePa3JGxNXEZB25vOk4zLaHxQgGoqYqUHc3fWKZjmgngubZ2CwsJ/c0yUXzw+WpXsJubouDuGqeSugBS1b7XexyX1H9y6lrekmouMFPUsYvhUWRYpXP9BrAxpxTIksM/rDKX+RxCOijimz22sVgZO0bT4mChhk5xlD9wzdFxwnIP5TclfDMqXs39n091lPfPIp8Letj1Y+20dDH1NFvhculrYsgbl4XSoyIOfZ4aUguiw4MNnBfEKqN292EP5ZQNfm78uTqpHtT stcs@STCSs-MacBook-Pro.local'
-        sshKeySecureFile: 'id_rsa'
-    - task: ArchiveFiles@2
-      displayName: 'Archive FakeRestAPI'
-      inputs:
-        rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    - task: CopyFiles@2
-      displayName: 'Copy Files to artifact staging directory'
-      inputs:
-        SourceFolder: 'automatedtesting'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
-    - upload: $(Build.ArtifactStagingDirectory)
-      artifact: drop
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload Package'
-      artifact: drop-fakerestapi
-    - script: sudo npm install newman -g
-      displayName: 'install newman'
-    - script: newman run StarterAPIs.json --reporters junit,cli --reporter-junit-export .
-      displayName: 'run postman collection'
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/newman-*.xml'
-        failTaskOnFailedTests: true
-        testRunTitle: 'postman test suite'
-- stage:
-  jobs:
-  - deployment: FakeRestAPI
-    pool:
-      vmImage: 'Ubuntu-16.04'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: 'azure-devops'
-              appName: 'sharawy-ud-proj-AppService'
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  - deployment: VMDeploy
-    displayName: Run test suites on vm
-    dependsOn: FakeRestAPI
-    environment:
-      name:  TEST
-      resourceType: VirtualMachine
-      tags: webtest
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: Bash@3
-            displayName: 'install test dependencies'
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        backendType: 'azurerm'
+        backendServiceArm: 'azure-devops'
+# - stage: Build
+#   jobs:
+#   - job: Build
+#     pool:
+#       name: Hosted Ubuntu 1604
+#     steps:
+#     # Needed for Terraform VM deployment
+#     - task: InstallSSHKey@0
+#       inputs:
+#         knownHostsEntry: '13.82.138.201'
+#         sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKsGKosPiMaX49FdzLc30W8Vyk1q2FpSd1YrWZmypqvgthX01e6MTGBZ2Ivcu16UP0rTmvuJCESXePa3JGxNXEZB25vOk4zLaHxQgGoqYqUHc3fWKZjmgngubZ2CwsJ/c0yUXzw+WpXsJubouDuGqeSugBS1b7XexyX1H9y6lrekmouMFPUsYvhUWRYpXP9BrAxpxTIksM/rDKX+RxCOijimz22sVgZO0bT4mChhk5xlD9wzdFxwnIP5TclfDMqXs39n091lPfPIp8Letj1Y+20dDH1NFvhculrYsgbl4XSoyIOfZ4aUguiw4MNnBfEKqN292EP5ZQNfm78uTqpHtT stcs@STCSs-MacBook-Pro.local'
+#         sshKeySecureFile: 'id_rsa'
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive FakeRestAPI'
+#       inputs:
+#         rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
+#         includeRootFolder: false
+#         archiveType: 'zip'
+#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+#     - task: CopyFiles@2
+#       displayName: 'Copy Files to artifact staging directory'
+#       inputs:
+#         SourceFolder: 'automatedtesting'
+#         TargetFolder: $(Build.ArtifactStagingDirectory)
+#     - upload: $(Build.ArtifactStagingDirectory)
+#       artifact: drop
+#     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+#       displayName: 'Upload Package'
+#       artifact: drop-fakerestapi
+#     - script: sudo npm install newman -g
+#       displayName: 'install newman'
+#     - script: newman run StarterAPIs.json --reporters junit,cli --reporter-junit-export .
+#       displayName: 'run postman collection'
+#     - task: PublishTestResults@2
+#       inputs:
+#         testResultsFormat: 'JUnit'
+#         testResultsFiles: '**/newman-*.xml'
+#         failTaskOnFailedTests: true
+#         testRunTitle: 'postman test suite'
+# - stage:
+#   jobs:
+#   - deployment: FakeRestAPI
+#     pool:
+#       vmImage: 'Ubuntu-16.04'
+#     environment: 'TEST'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: AzureWebApp@1
+#             displayName: 'Deploy Azure Web App'
+#             inputs:
+#               azureSubscription: 'azure-devops'
+#               appName: 'sharawy-ud-proj-AppService'
+#               appType: webApp
+#               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+#   - deployment: VMDeploy
+#     displayName: Run test suites on vm
+#     dependsOn: FakeRestAPI
+#     environment:
+#       name:  TEST
+#       resourceType: VirtualMachine
+#       tags: webtest
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: Bash@3
+#             displayName: 'install test dependencies'
+#             inputs:
+#               targetType: 'inline'
+#               script: |
+#                 #! /bin/bash
                 
-                sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
-                sudo apt-get install -y chromium-browser
-                pip3 install selenium
-                sudo apt-get install chromium-chromedriver
-                DIR="$(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3"
-                if [ ! -d "$DIR" ]; then
-                # Take action if $DIR not exists. #
-                echo "Installing jmeter  in ${DIR}..."
-                cd $(Pipeline.Workspace)/drop/jmeter
-                wget  http://apache.volia.net//jmeter/binaries/apache-jmeter-5.3.tgz
-                tar -xf apache-jmeter-5.3.tgz 
-                fi
+#                 sudo apt-get upgrade -y
+#                 sudo apt-get install python3-pip -y
+#                 sudo apt-get install unzip -y
+#                 sudo apt-get install -y chromium-browser
+#                 pip3 install selenium
+#                 sudo apt-get install chromium-chromedriver
+#                 DIR="$(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3"
+#                 if [ ! -d "$DIR" ]; then
+#                 # Take action if $DIR not exists. #
+#                 echo "Installing jmeter  in ${DIR}..."
+#                 cd $(Pipeline.Workspace)/drop/jmeter
+#                 wget  http://apache.volia.net//jmeter/binaries/apache-jmeter-5.3.tgz
+#                 tar -xf apache-jmeter-5.3.tgz 
+#                 fi
 
-          - task: Bash@3
-            displayName: 'run selenium'
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                echo "Starting selenium script run"
-                python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
-          - task: Bash@3
-            displayName: 'run jmeter'
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                echo "Starting jmeter script run"
-                $(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3/bin/jmeter -n -f -t $(Pipeline.Workspace)/drop/jmeter/Starter.jmx -l $(Pipeline.Workspace)/drop/jmeter/Results.jtl -e -o $(Pipeline.Workspace)/drop/jmeter/htmlReports/
+#           - task: Bash@3
+#             displayName: 'run selenium'
+#             inputs:
+#               targetType: 'inline'
+#               script: |
+#                 #! /bin/bash
+#                 echo "Starting selenium script run"
+#                 python3 '$(Pipeline.Workspace)/drop/selenium/login.py'
+#           - task: Bash@3
+#             displayName: 'run jmeter'
+#             inputs:
+#               targetType: 'inline'
+#               script: |
+#                 #! /bin/bash
+#                 echo "Starting jmeter script run"
+#                 $(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3/bin/jmeter -n -f -t $(Pipeline.Workspace)/drop/jmeter/Starter.jmx -l $(Pipeline.Workspace)/drop/jmeter/Results.jtl -e -o $(Pipeline.Workspace)/drop/jmeter/htmlReports/
 
