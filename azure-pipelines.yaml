@@ -22,7 +22,7 @@ stages:
     - task: TerraformCLI@0
       inputs:
         command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        workingDirectory: 'terraform'
         backendType: 'azurerm'
         ensureBackend: true
         backendServiceArm: 'azure-devops'
@@ -30,6 +30,8 @@ stages:
         backendAzureRmStorageAccountName: 'tstate27986'
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'terraform.tfstate'
+        backendAzureRmResourceGroupLocation: 'eastus'
+
 # - stage: Build
 #   jobs:
 #   - job: Build
