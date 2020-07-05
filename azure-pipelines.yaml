@@ -2,6 +2,15 @@ name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
+- stage: Build infrastructure
+  jobs:
+  - job: Build
+    pool:
+      name: Hosted Ubuntu 1604
+    steps:
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: 'v0.11.11'
 - stage: Build
   jobs:
   - job: Build
