@@ -17,6 +17,11 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         backendType: 'azurerm'
         backendServiceArm: 'azure-devops'
+        backendAzureRmResourceGroupName: 'tstate-sharawy'
+        backendAzureRmStorageAccountName: 'tstate27986'
+        backendAzureRmContainerName: 'tstate'
+        backendAzureRmKey: 'terraform.tfstate'
+        backendServiceArm: 'azure-devops'
 # - stage: Build
 #   jobs:
 #   - job: Build
