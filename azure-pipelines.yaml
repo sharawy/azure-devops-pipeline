@@ -31,7 +31,7 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          ls ~/.ssh
+          ls ~/.ssh/known_hosts
           # ls /home/vsts/work/_temp/
           # echo "Run terraform plan"
           # terraform plan
