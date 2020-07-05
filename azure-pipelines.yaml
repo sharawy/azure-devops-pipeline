@@ -32,11 +32,11 @@ stages:
       name: id_rsa_file
       inputs:
         secureFile: 'id_rsa'
-    - task: TerraformCLI@0
-      inputs:
-        command: 'plan'
-        workingDirectory: 'terraform'
-        environmentServiceName: 'azure-devops'
+    # - task: TerraformCLI@0
+    #   inputs:
+    #     command: 'plan'
+    #     workingDirectory: 'terraform'
+    #     environmentServiceName: 'azure-devops'
     - task: CmdLine@2
       inputs:
         script: |
