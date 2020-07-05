@@ -2,7 +2,7 @@ name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
-- stage: Build_infrastructure
+- stage: Build
   jobs:
   - job: Build
     pool:
@@ -11,14 +11,7 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'v0.11.11'
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          # Write your commands here
-          
-          ls
-          pwd
+
     - task: TerraformCLI@0
       inputs:
         command: 'init'
@@ -30,6 +23,11 @@ stages:
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'terraform.tfstate'
         backendAzureRmResourceGroupLocation: 'eastus'
+    - task: InstallSSHKey@0
+      inputs:
+        knownHostsEntry: '13.82.138.201'
+        sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKsGKosPiMaX49FdzLc30W8Vyk1q2FpSd1YrWZmypqvgthX01e6MTGBZ2Ivcu16UP0rTmvuJCESXePa3JGxNXEZB25vOk4zLaHxQgGoqYqUHc3fWKZjmgngubZ2CwsJ/c0yUXzw+WpXsJubouDuGqeSugBS1b7XexyX1H9y6lrekmouMFPUsYvhUWRYpXP9BrAxpxTIksM/rDKX+RxCOijimz22sVgZO0bT4mChhk5xlD9wzdFxwnIP5TclfDMqXs39n091lPfPIp8Letj1Y+20dDH1NFvhculrYsgbl4XSoyIOfZ4aUguiw4MNnBfEKqN292EP5ZQNfm78uTqpHtT stcs@STCSs-MacBook-Pro.local'
+        sshKeySecureFile: 'id_rsa'
     - task: CmdLine@2
       inputs:
         script: |
@@ -37,19 +35,8 @@ stages:
           terraform plan
         workingDirectory: 'terraform'
         failOnStderr: true
+    # Needed for Terraform VM deployment
 
-# - stage: Build
-#   jobs:
-#   - job: Build
-#     pool:
-#       name: Hosted Ubuntu 1604
-#     steps:
-#     # Needed for Terraform VM deployment
-#     - task: InstallSSHKey@0
-#       inputs:
-#         knownHostsEntry: '13.82.138.201'
-#         sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKsGKosPiMaX49FdzLc30W8Vyk1q2FpSd1YrWZmypqvgthX01e6MTGBZ2Ivcu16UP0rTmvuJCESXePa3JGxNXEZB25vOk4zLaHxQgGoqYqUHc3fWKZjmgngubZ2CwsJ/c0yUXzw+WpXsJubouDuGqeSugBS1b7XexyX1H9y6lrekmouMFPUsYvhUWRYpXP9BrAxpxTIksM/rDKX+RxCOijimz22sVgZO0bT4mChhk5xlD9wzdFxwnIP5TclfDMqXs39n091lPfPIp8Letj1Y+20dDH1NFvhculrYsgbl4XSoyIOfZ4aUguiw4MNnBfEKqN292EP5ZQNfm78uTqpHtT stcs@STCSs-MacBook-Pro.local'
-#         sshKeySecureFile: 'id_rsa'
 #     - task: ArchiveFiles@2
 #       displayName: 'Archive FakeRestAPI'
 #       inputs:
