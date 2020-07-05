@@ -31,10 +31,10 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          ls
-          ls /home/vsts/work/_temp/
-          echo "Run terraform plan"
-          terraform plan
+          ls ~/.ssh
+          # ls /home/vsts/work/_temp/
+          # echo "Run terraform plan"
+          # terraform plan
         workingDirectory: 'terraform'
         failOnStderr: true
     # Needed for Terraform VM deployment
