@@ -41,8 +41,8 @@ stages:
       inputs:
         script: |
           echo  $(id_rsa_file.secureFilePath)
-          ls ~/.ssh/
-          cat ~/.ssh/id_rsa.pub
+          cat ~/.ssh/known_hosts
+          
 
           # echo "Run terraform plan"
           # terraform plan
