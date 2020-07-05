@@ -36,7 +36,6 @@ stages:
       inputs:
         command: 'plan'
         environmentServiceName: 'azure-devops'
-        secureVarsFile: 'id_rsa'
     - task: CmdLine@2
       inputs:
         script: |
