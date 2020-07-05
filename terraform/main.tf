@@ -52,7 +52,7 @@ module "publicip" {
   resource_type    = "publicip"
   resource_group   = "${module.resource_group.resource_group_name}"
 }
-/*
+
 module "virtual_machine"{
   source = "modules/vm"
   location           = "${var.location}"
@@ -64,5 +64,4 @@ module "virtual_machine"{
   vm_admin_username  = "sharawy"
   vm_interface_name = "vm_interface"
 }
-*/
 
