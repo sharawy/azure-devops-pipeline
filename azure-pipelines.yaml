@@ -12,10 +12,7 @@ stages:
       inputs:
         terraformVersion: 'v0.11.11'
     - task: TerraformCLI@0
-      inputs:
-        command: 'refresh'
-        environmentServiceName: 'azure-devops'
-    - task: TerraformCLI@0
+      name: terraformInit
       inputs:
         command: 'init'
         workingDirectory: 'terraform'
@@ -26,6 +23,11 @@ stages:
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'terraform.tfstate'
         backendAzureRmResourceGroupLocation: 'eastus'
+    - task: TerraformCLI@0
+      name: terraformRefresh
+      inputs:
+        command: 'refresh'
+        environmentServiceName: 'azure-devops'
     - task: DownloadSecureFile@1
       name: public_key_file
       inputs:
@@ -37,6 +39,7 @@ stages:
           cp $(public_key_file.secureFilePath) ~/.ssh
 
     - task: TerraformCLI@0
+      name: terraformPlan
       inputs:
         command: 'plan'
         workingDirectory: 'terraform'
