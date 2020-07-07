@@ -12,17 +12,22 @@ stages:
       inputs:
         terraformVersion: 'v0.11.11'
     - task: TerraformCLI@0
-      name: terraformInit
       inputs:
         command: 'init'
-        workingDirectory: 'terraform'
+        secureVarsFile: 'terraform.tfvars'
         backendType: 'azurerm'
-        backendServiceArm: 'azure-devops'
-        backendAzureRmResourceGroupName: 'tstate-sharawy'
-        backendAzureRmStorageAccountName: 'tstate27986'
-        backendAzureRmContainerName: 'tstate'
-        backendAzureRmKey: 'terraform.tfstate'
-        backendAzureRmResourceGroupLocation: 'eastus'
+    # - task: TerraformCLI@0
+    #   name: terraformInit
+    #   inputs:
+    #     command: 'init'
+    #     workingDirectory: 'terraform'
+    #     backendType: 'azurerm'
+    #     backendServiceArm: 'azure-devops'
+    #     backendAzureRmResourceGroupName: 'tstate-sharawy'
+    #     backendAzureRmStorageAccountName: 'tstate27986'
+    #     backendAzureRmContainerName: 'tstate'
+    #     backendAzureRmKey: 'terraform.tfstate'
+    #     backendAzureRmResourceGroupLocation: 'eastus'
     - task: DownloadSecureFile@1
       name: public_key_file
       inputs:
@@ -99,6 +104,7 @@ stages:
       runOnce:
         deploy:
           steps:
+
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
