@@ -46,12 +46,11 @@ stages:
         command: 'apply'
         workingDirectory: 'terraform'
         environmentServiceName: 'azure-devops'
-    - task: TerraformCLI@0
-      name: terraformOutput
+    - task: Bash@3
       inputs:
-        command: 'output'
+        targetType: 'inline'
+        script: 'terraform output -json > outputs.json'
         workingDirectory: 'terraform'
-        commandOptions: '-json > outputs.json'
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
