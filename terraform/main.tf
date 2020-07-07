@@ -65,3 +65,6 @@ module "virtual_machine"{
   vm_interface_name = "vm_interface"
 }
 
+output "public_ip_address" {
+    value = "${module.publicip.public_ip_address}"
+}
