@@ -26,6 +26,7 @@ stages:
     - task: TerraformCLI@0
       name: terraformRefresh
       inputs:
+        workingDirectory: 'terraform'
         command: 'refresh'
         environmentServiceName: 'azure-devops'
     - task: DownloadSecureFile@1
@@ -53,8 +54,8 @@ stages:
     - task: TerraformCLI@0
       inputs:
         command: 'output'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        commandOptions: '-json > outputs.json'
+        workingDirectory: 'terraform'
+        # commandOptions: '-json > outputs.json'
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
