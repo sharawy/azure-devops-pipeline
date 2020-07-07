@@ -11,7 +11,10 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'v0.11.11'
-
+    - task: TerraformCLI@0
+      inputs:
+        command: 'refresh'
+        environmentServiceName: 'azure-devops'
     - task: TerraformCLI@0
       inputs:
         command: 'init'
@@ -32,10 +35,7 @@ stages:
         targetType: 'inline'
         script: |
           cp $(public_key_file.secureFilePath) ~/.ssh
-    - task: TerraformCLI@0
-      inputs:
-        command: 'refresh'
-        environmentServiceName: 'azure-devops'
+
     - task: TerraformCLI@0
       inputs:
         command: 'plan'
@@ -47,6 +47,11 @@ stages:
         command: 'apply'
         workingDirectory: 'terraform'
         environmentServiceName: 'azure-devops'
+    - task: TerraformCLI@0
+      inputs:
+        command: 'output'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        commandOptions: '-json > outputs.json'
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
