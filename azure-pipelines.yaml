@@ -34,6 +34,10 @@ stages:
           cp $(public_key_file.secureFilePath) ~/.ssh
     - task: TerraformCLI@0
       inputs:
+        command: 'refresh'
+        environmentServiceName: 'azure-devops'
+    - task: TerraformCLI@0
+      inputs:
         command: 'plan'
         workingDirectory: 'terraform'
         environmentServiceName: 'azure-devops'
