@@ -60,7 +60,7 @@ module "virtual_machine"{
   subnet_id          = "${module.network.subnet_id_test}"
   public_ip_address  = "${module.publicip.public_ip_address_id}"
   vm_name            = "vmsharawy"
-  vm_size            = "Standard_B1ls"
+  vm_size            = "Standard_B1ms"
   vm_admin_username  = "sharawy"
   vm_interface_name = "vm_interface"
 }
