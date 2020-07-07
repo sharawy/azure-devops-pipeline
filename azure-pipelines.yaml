@@ -60,7 +60,7 @@ stages:
         failOnStderr: true
     - task: InstallSSHKey@0
       inputs:
-        knownHostsEntry: '13.82.138.201'
+        knownHostsEntry: '$(terraformOutput.public_ip_address)'#'13.82.138.201'
         sshKeySecureFile: 'id_rsa'
 #     - task: ArchiveFiles@2
 #       displayName: 'Archive FakeRestAPI'
