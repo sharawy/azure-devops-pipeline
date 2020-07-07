@@ -23,21 +23,22 @@ stages:
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'terraform.tfstate'
         backendAzureRmResourceGroupLocation: 'eastus'
+    - task: DownloadSecureFile@1
+      name: public_key_file
+      inputs:
+        secureFile: 'id_rsa.pub'
+    - task: Bash@3
+      displayName: 'copyPublicKey'
+      inputs:
+        targetType: 'inline'
+        script: |
+          cp $(public_key_file.secureFilePath) ~/.ssh
     - task: TerraformCLI@0
       name: terraformRefresh
       inputs:
         workingDirectory: 'terraform'
         command: 'refresh'
         environmentServiceName: 'azure-devops'
-    - task: DownloadSecureFile@1
-      name: public_key_file
-      inputs:
-        secureFile: 'id_rsa.pub'
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          cp $(public_key_file.secureFilePath) ~/.ssh
 
     - task: TerraformCLI@0
       name: terraformPlan
@@ -52,6 +53,7 @@ stages:
         workingDirectory: 'terraform'
         environmentServiceName: 'azure-devops'
     - task: TerraformCLI@0
+      name: terraformOutput
       inputs:
         command: 'output'
         workingDirectory: 'terraform'
