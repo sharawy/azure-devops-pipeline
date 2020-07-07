@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "968b3a18-cc72-48a2-9b6b-e8619b4aaca8",
+		"_postman_id": "5f0cf767-45ea-46d8-9742-fee23752d420",
 		"name": "Starter APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,11 +11,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "38b1717c-45ae-477f-8dae-8e889ba381d5",
+						"id": "6a7e5459-6ef3-41b2-a2f6-7c1a46ecc150",
 						"exec": [
 							"pm.test(\"Successful response\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"success\");",
 							"});",
+							"",
 							"var json = pm.response.json();",
 							"pm.environment.set(\"id\", json.data.id);"
 						],
@@ -53,12 +54,133 @@
 			"response": []
 		},
 		{
+			"name": "Update Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60d5f0da-887a-45ee-865d-a3d5d18c78d5",
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"    pm.expect(pm.response.text()).to.include(\"updated\");",
+							"",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{updated}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/update/{{id}}",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"update",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a80d383-e7aa-4392-8b73-31f4c9b89ee8",
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/delete/{{id}}",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"delete",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/employee/{{id}}",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get All Employees",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "af3cb111-e3ac-4174-b8ca-7f4127a0285d",
+						"id": "3ce1fe64-b618-4d9c-94b0-760fd8bd7daa",
 						"exec": [
 							"pm.test(\"Successful response\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"success\");",
