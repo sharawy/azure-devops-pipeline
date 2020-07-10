@@ -12,7 +12,7 @@ def page_has_loaded(driver):
 def main():
     print ('Starting the browser...')
     options = ChromeOptions()
-    # options.add_argument("--headless") 
+    options.add_argument("--headless") 
     driver = webdriver.Chrome(options=options)
     print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get(constants.BASE_URL)
