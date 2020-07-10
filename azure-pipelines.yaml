@@ -147,7 +147,7 @@ stages:
               script: |
                 #! /bin/bash
                 echo "Starting selenium script run"
-                python3 '$(Pipeline.Workspace)/drop/selenium/main.py |& tee $(Pipeline.Workspace)/drop/selenium/logs.txt'
+                python3 '$(Pipeline.Workspace)/drop/selenium/main.py' |& tee $(Pipeline.Workspace)/drop/selenium/logs.txt
           - task: Bash@3
             displayName: 'run jmeter'
             inputs:
