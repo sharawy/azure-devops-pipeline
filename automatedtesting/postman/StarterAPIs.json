@@ -37,12 +37,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://dummy.restapiexample.com/api/v1/create",
-					"protocol": "http",
+					"raw": "{{APP_URL}}/api/v1/create",
 					"host": [
-						"dummy",
-						"restapiexample",
-						"com"
+						"{{APP_URL}}"
 					],
 					"path": [
 						"api",
@@ -86,12 +83,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://dummy.restapiexample.com/api/v1/update/{{id}}",
-					"protocol": "http",
+					"raw": "{{APP_URL}}/api/v1/update/{{id}}",
 					"host": [
-						"dummy",
-						"restapiexample",
-						"com"
+						"{{APP_URL}}"
 					],
 					"path": [
 						"api",
@@ -134,12 +128,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://dummy.restapiexample.com/api/v1/delete/{{id}}",
-					"protocol": "http",
+					"raw": "{{APP_URL}}/api/v1/delete/{{id}}",
 					"host": [
-						"dummy",
-						"restapiexample",
-						"com"
+						"{{APP_URL}}"
 					],
 					"path": [
 						"api",
@@ -157,12 +148,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://dummy.restapiexample.com/api/v1/employee/{{id}}",
-					"protocol": "http",
+					"raw": "{{APP_URL}}/api/v1/employee/{{id}}",
 					"host": [
-						"dummy",
-						"restapiexample",
-						"com"
+						"{{APP_URL}}"
 					],
 					"path": [
 						"api",
@@ -195,12 +183,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://dummy.restapiexample.com/api/v1/employees",
-					"protocol": "http",
+					"raw": "{{APP_URL}}/api/v1/employees",
 					"host": [
-						"dummy",
-						"restapiexample",
-						"com"
+						"{{APP_URL}}"
 					],
 					"path": [
 						"api",

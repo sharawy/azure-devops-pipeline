@@ -81,7 +81,7 @@ stages:
       artifact: drop-fakerestapi
     - script: sudo npm install newman -g
       displayName: 'install newman'
-    - script: newman run StarterAPIs.json --reporters junit,cli --reporter-junit-export .
+    - script: newman run StarterAPIs.json -e TEST.postman_environment.json --reporters junit,cli --reporter-junit-export .
       displayName: 'run postman collection'
     - task: PublishTestResults@2
       inputs:
