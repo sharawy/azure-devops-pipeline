@@ -12,5 +12,5 @@ def login (driver, user, password):
     driver.find_element_by_css_selector("#password").send_keys(password)
     driver.find_element_by_css_selector("#login_button_container > div > form > input.btn_action").click()
     assert "inventory.html" in driver.current_url, "Failed to login."
-    print('{0:%Y-%m-%d %H:%M:%S} '.format(datetime.now())+"login suscessfull")
+    print('{0:%Y-%m-%d %H:%M:%S} '.format(datetime.now())+" {} loged in suscessfull".format(user))
 
