@@ -155,5 +155,5 @@ stages:
               script: |
                 #! /bin/bash
                 echo "Starting jmeter script run"
-                $(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3/bin/jmeter -n -f -t $(Pipeline.Workspace)/drop/jmeter/Starter.jmx -l $(Pipeline.Workspace)/drop/jmeter/Results.jtl -e -o $(Pipeline.Workspace)/drop/jmeter/htmlReports/
+                $(Pipeline.Workspace)/drop/jmeter/apache-jmeter-5.3/bin/jmeter -n -f -t $(Pipeline.Workspace)/drop/jmeter/Starter.jmx -l $(Pipeline.Workspace)/drop/jmeter/Results.jtl 
 
